@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <h1 class="display-4">Welcome to SimpleData</h1>
+    <p class="lead">Manage and filter your data efficiently.</p>
+    <hr class="my-4">
+    <a class="btn btn-primary btn-lg" href="/add" role="button">Add Entry</a>
+    <a class="btn btn-secondary btn-lg" href="/filter" role="button">Filter Data</a>
+</div>
+{% endblock %}

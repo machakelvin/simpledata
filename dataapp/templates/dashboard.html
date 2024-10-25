@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+  {% if messages %}
+    <div class="row mt-3">
+      {% for message in messages %}
+        <div class="col-12 col-md-10 mx-auto">
+          <div class="alert 
+                       {% if message.tags == 'error' %} alert-danger {% else %} alert-success {% endif %} 
+                       alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-12 col-md-10 mx-auto mt-5">
+      <div class="d-flex justify-content-end mb-3">
+        <a href="{% url 'add_entry' %}" class="btn btn-primary">Add New Entry</a>
+      </div>
+
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Date</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Details</th>
+            <th scope="col" colspan="3" class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if items|length == 0 %}
+            <tr>
+              <th scope="row" colspan="5" class="text-center">No entries found.</th>
+            </tr>
+          {% endif %}
+
+          {% for item in items %}
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>{{ item.category }}</td>
+              <td>{{ item.date }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.details }}</td>
+              <td>
+                <a href="{% url 'edit_entry' item.id %}" class="btn btn-outline-secondary">Edit</a>
+              </td>
+              <td>
+                <a href="{% url 'delete-item' item.id %}" class="btn btn-danger btn-outline-secondary">Delete</a>
+              </td>
+              
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      // Automatically hide alerts after 5 seconds
+      setTimeout(function() {
+        $('.alert').fadeOut('slow');
+      }, 5000); // 5000 milliseconds = 5 seconds
+    });
+  </script>
+{% endblock %}
